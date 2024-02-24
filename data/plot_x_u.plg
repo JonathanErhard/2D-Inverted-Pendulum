@@ -1,0 +1,52 @@
+#            1 2 3   4      5
+#structur t p v theta omega
+if(!exists("folder")) folder = "data/2D_Win_PDContoller"
+file_x = folder."/data_x.csv"
+file_y0 = folder."/data_y0.csv"
+file_y1 = folder."/data_y1.csv"
+file_xhat = folder."/data_xhat.csv"
+
+d_width = 600
+d_height = 400
+
+set terminal postscript eps enhanced
+set datafile separator comma
+set term pbm size d_width, d_height
+#set style points radius 0.05
+#the Frame is not included... 40 and 80 is what worked for me
+d_width = d_width+40
+d_height = d_height+80
+
+set encoding utf8
+
+#plot x
+set term wxt 1 title 'x'
+set term wxt position 0,0
+set xlabel 't [s]'
+set ylabel 'x [m]'
+plot file_x using 1:2 with lines title 'x[0]'
+#plot v
+set term wxt 2 title 'v'
+set term wxt position d_width,0
+set xlabel 't [s]'
+set ylabel 'v [m/s]'
+plot file_x using 1:3 with lines title 'x[1]'
+#plot theta
+set term wxt 3 title 'theta' enhanced
+set term wxt position 0,d_height
+set xlabel 't [s]'
+set ylabel '{/Symbol q} [rad]'
+plot file_x using 1:4 with lines title 'x[2]'
+#plot omega
+set term wxt 4 title 'omega' enhanced
+set term wxt position d_width,d_height
+set xlabel 't [s]'
+set ylabel '{/Symbol w} [rad/s]'
+plot file_x using 1:5 with lines title 'x[3]'
+
+set term wxt 5 title 'u'
+set xlabel 't [s]'
+set ylabel 'u [m/s²]'
+plot file_x using 1:6 with lines title 'u'
+
+pause -1 "Hit any key to continue"
